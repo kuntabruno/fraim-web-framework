@@ -1,0 +1,21 @@
+{
+  "name": "fraims-mvc-framework",
+  "version": "0.0.1",
+  "description": "Fraims MVC framework. This framework has been developed not to be used in a real professional environment, but only in a personal environment as a learning resource",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "npm run tests"
+  },
+  "keywords": [
+    "fraims-mvc mvc-framework"
+  ],
+  "author": "Bruno Ouko",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/pubsub-js": "^1.8.3",
+    "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "pubsub-js": "^1.9.4"
+  }
+}
