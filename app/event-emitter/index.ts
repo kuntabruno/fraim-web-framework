@@ -13,7 +13,7 @@ export class EventEmitter implements IEventEmitter {
     this._mediator.publish(event);
   }
 
-  public subscribeToEvents(events: Array<IAppEvent>) {
+  public subscribeToEvents(events: IAppEvent[]) {
     this._events = events;
     for (let i = 0; i < this._events.length; i++) {
       this._mediator.subscribe(this._events[i]);
