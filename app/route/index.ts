@@ -5,11 +5,7 @@ export class Route implements IRoute {
     public actionName: string;
     public args: Object[];
 
-    constructor(options: IRoute) {
-       if (!options) {
-          throw new Error(`Route options are required to create a Route instance`);
-       }
-       const { controllerName, actionName, args } = options;
+    constructor(controllerName: string, actionName: string, args: Object[]) {
        this.controllerName = controllerName;
        this.actionName = actionName;
        this.args = args;
