@@ -1,18 +1,21 @@
 import { EventEmitter } from '../event-emitter/index';
 import { AppEvent } from '../application-events';
+import { Controller } from '../controller';
 
 import { IDispatcher } from './dispatcher.interface';
 import { IMediator } from '../mediator/mediator.interface';
 import { IRoute } from '../route/route.interface';
+import { IController } from '../controller/controller.interface';
+
 
 export class Dispatcher extends EventEmitter implements IDispatcher {
-    private _controllersHashMap: Map<string, Object>;
-    private _currentController: IController;
+    private _controllersHashMap: Map<string, IController | undefined>;
+    private _currentController: IController | undefined;
     private _currentControllerName: string | null;
     constructor(mediator: IMediator, controllers: IControllerDetails[]) {
         super(mediator);
-        this._controllersHashMap = this.getController(this._controllersHashMap);
-        this._currentController = null;
+        this._controllersHashMap = this.getController(controllers);
+        this._currentController = undefined;
         this._currentControllerName = null;
     }
 
@@ -24,9 +27,9 @@ export class Dispatcher extends EventEmitter implements IDispatcher {
     }
 
 
-    private getController(controllers : IControllerDetails[]) : Object {
+    private getController(controllers : IControllerDetails[]) : Map<string, IController | undefined> {
         let hashMapEntry, name, controller, l;
-        let hashMap = new Map<string, Object>();
+        let hashMap = new Map<string, IController | undefined>();
         l = controllers.length;
         if (l <= 0) {
           this.triggerEvent(
@@ -66,8 +69,8 @@ export class Dispatcher extends EventEmitter implements IDispatcher {
         // create a controller instance
         const newController : IController = new Controller(this._mediator);
         // action is not available
-        var a = newController[route.actionName];
-        if (a === null || a === undefined) {
+        var action = newController[`${route.actionName}`];
+        if (action === null || action === undefined) {
             this.triggerEvent(new AppEvent(
             "app.error",
             `Action not found in controller: ${route.controllerName} 
@@ -80,14 +83,19 @@ export class Dispatcher extends EventEmitter implements IDispatcher {
                 // initialize controller
                 this._currentControllerName = route.controllerName;
                 this._currentController = controller;
-                this._currentController.initialize();
+                if (this._currentController) {
+                    this._currentController.init();
+                }
+                
             } else {
             // dispose previous controller if not needed
             if(this._currentControllerName !== route.controllerName) {
             this._currentController.dispose();
             this._currentControllerName = route.controllerName;
             this._currentController = controller;
-            this._currentController.initialize();
+            if (this._currentController) {
+                this._currentController.init();
+            }
             }
         }
         // pass flow from dispatcher to the controller
