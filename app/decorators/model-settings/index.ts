@@ -9,17 +9,17 @@ export function ModelSettings<TFunction extends Function>(serviceUrl: string) {
         return new constructor(...args);
       };
       c.prototype = constructor.prototype;
-      var instance = new c();
+      const instance = new c();
       instance._serviceUrl = serviceUrl;
       return instance;
     }
     // the new constructor behaviour
-    var f: any = function (...args: any[]) {
+    const newConstructor: any = function (...args: any[]) {
       return instantiate(originalConstructor, args);
     };
     // copy prototype so intanceof operator still works
-    f.prototype = originalConstructor.prototype;
+    newConstructor.prototype = originalConstructor.prototype;
     // return new constructor (will override original)
-    return f;
+    return newConstructor;
   };
 }
