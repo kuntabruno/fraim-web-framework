@@ -2,6 +2,14 @@
 
 This framework has not been designed to be used in a professional environment. It is only to be used as a learning resource.
 
+## Dependencies
+
+Primary dependencies are [handlebars](https://www.npmjs.com/package/handlebars) for template hydration implementation, [pubsub-js](https://www.npmjs.com/package/pubsub-js) for the EventEmitter implementation
+
+## Architecture
+
+![Fraims application architecture](architecture/fraims-web-framework-architecture.drawio.png)
+
 ## Framework Components
 
 1. **Application**
