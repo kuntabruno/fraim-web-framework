@@ -1,9 +1,9 @@
 import { TemplateDelegate, compile } from 'handlebars';
 
 import { EventEmitter } from '../event-emitter';
+import { Model } from '../model';
 
 import { IMediator } from '../mediator/mediator.interface';
-import { Model } from '../model';
 import { IView } from './view.interface';
 
 export class View extends EventEmitter implements IView {

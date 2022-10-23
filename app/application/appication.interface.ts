@@ -1,12 +1,14 @@
+import { IController } from '../controller/controller.interface';
+
 export interface IAppSettings {
-    isDebug: boolean;
-    defaultController: string;
-    defaultAction: string;
-    controllers: Array<IControllerDetails>;
-    onErrorHandler: (o: Object) => void;
+  isDebug: boolean;
+  defaultController: string;
+  defaultAction: string;
+  controllers: Array<IControllerDetails>;
+  onErrorHandler: (o: Object) => void;
 }
 
 export interface IControllerDetails {
-    controllerName: string;
-    controller : { new(...args : any[]): IController ;};
+  controllerName: string;
+  controller: { new (...args: any[]): IController };
 }
